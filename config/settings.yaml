@@ -1,0 +1,125 @@
+# config/settings.yaml — Polymarket Neural Trading System
+
+# Bankroll
+bankroll: 100          # Start small (USDC)
+dry_run: true          # ALWAYS start with dry run
+demo_seed_on_start: false
+demo_trade_count: 36
+
+# Edge thresholds (realistic)
+min_edge: 0.08         # 8% minimum edge
+kelly_fraction: 0.25   # Quarter Kelly
+min_confidence: 0.55
+
+# Position limits
+max_position_pct: 0.02    # 2% of bankroll per trade
+max_portfolio_pct: 0.20   # 20% total exposure
+max_category_exposure_pct: 0.08
+max_positions: 10
+max_per_category: 3
+
+# Drawdown limits
+drawdown_reduce: 0.08     # Start reducing at 8% drawdown
+drawdown_stop: 0.15       # Stop new trades at 15%
+drawdown_emergency: 0.20  # Close everything at 20%
+
+# Model
+tcn_retrain_days: 14       # Retrain TCN every 2 weeks (set 0 to disable)
+regime_refit_days: 30      # Refit HMM monthly (set 0 to disable)
+brier_check_interval: 50   # Check calibration every 50 trades (handled by SelfAdjuster)
+enable_probability_calibration: true
+probability_calibration_method: isotonic
+probability_calibration_min_samples: 30
+probability_calibration_refit_interval: 25
+
+# Scanning
+scan_interval_minutes: 15
+market_watch_top_n: 12
+opportunity_top_n: 10
+news_top_n: 20
+min_liquidity: 500
+min_volume_24h: 100
+min_days_to_resolution: 1
+max_days_to_resolution: 90
+
+# Execution
+order_expiry_minutes: 60
+max_slippage_bps: 50
+split_orders_above: 50     # Split orders above $50
+enable_bracket_orders: true
+bracket_take_profit_pct: 0.06
+bracket_stop_loss_pct: 0.035
+gtt_ttl_minutes: 1440
+paper_fill_on_place: true
+paper_allow_partial_fills: true
+paper_partial_fill_ratio: 0.50
+paper_fill_tolerance: 0.002
+live_reconcile_enabled: true
+risk_nudge_spread: 0.06
+risk_nudge_book_depth: 300
+
+# Sentiment
+use_llm_sentiment: true
+sentiment_cache_minutes: 30  # Don't re-analyze same market too often
+sentiment_model: "claude-haiku-4-5-20251001"
+
+# Backtest realism
+backtest_apply_costs: true
+backtest_fee_bps: 10
+backtest_slippage_bps: 5
+backtest_spread_impact: 0.35
+
+# Signal weights (initial — tuned by learner)
+signal_weights:
+  order_book: 0.15
+  momentum: 0.10
+  sentiment: 0.30
+  news_volume: 0.10
+  cross_market: 0.10
+  tcn_model: 0.25
+
+# Edge combiner regime weights
+regime_weights:
+  stable:
+    bayesian: 0.70
+    tcn: 0.30
+  trending:
+    bayesian: 0.40
+    tcn: 0.60
+  volatile:
+    bayesian: 0.80
+    tcn: 0.20
+
+# API endpoints
+gamma_api_url: "https://gamma-api.polymarket.com"
+clob_api_url: "https://clob.polymarket.com"
+
+# Timeouts (seconds)
+api_timeout: 10
+llm_timeout: 30
+
+# Alerting (optional — leave blank to disable)
+alert_webhook_url: ""         # Slack/Discord/Telegram webhook URL
+alert_webhook_severities:     # Which severities trigger webhook
+  - critical
+  - error
+telegram_min_severity: "warning"  # Minimum severity for Telegram alerts (info/warning/error/critical)
+
+# Risk guards
+max_single_order_usdc: 500     # Hard cap on any single order
+max_consecutive_failures: 5    # Auto-activate kill switch after N failures
+
+# Position reconciliation
+stale_position_hours: 48       # Alert on positions older than this
+auto_close_phantoms: false     # Auto-close phantom positions (recommend false until tested)
+
+# Health check (for external monitoring)
+health_check_port: 8080
+
+# Multi-strategy registry
+strategies:
+  - name: bayesian_tcn
+    weight: 0.7
+  - name: momentum
+    weight: 0.3
+    lookback: 10
