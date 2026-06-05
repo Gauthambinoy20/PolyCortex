@@ -98,7 +98,7 @@ regex==2026.4.4
 requests==2.33.1
 rlp==4.1.0
 rpds-py==0.30.0
-ruff==0.15.10
+ruff==0.15.16
 scikit-learn==1.8.0
 scipy==1.17.1
 setuptools==81.0.0
