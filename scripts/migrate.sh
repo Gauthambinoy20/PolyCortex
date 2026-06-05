@@ -1,0 +1,6 @@
+#!/bin/bash
+# Run alembic migrations.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+source .venv/bin/activate
+alembic upgrade head
