@@ -1,0 +1,51 @@
+groups:
+  - name: polymarket-trader
+    interval: 30s
+    rules:
+      - alert: HighErrorRate
+        expr: sum(rate(polymarket_errors_total[5m])) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: High error rate in PolymarketTrader
+          description: "Errors/sec > 0.5 for 5 minutes. Current: {{ $value }}."
+
+      - alert: DrawdownBreach
+        expr: polymarket_drawdown_ratio > 0.15
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: Drawdown threshold breached
+          description: "Drawdown {{ $value | humanizePercentage }} exceeds 15% stop."
+
+      - alert: KillSwitchActive
+        expr: polymarket_kill_switch_active == 1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: Kill switch active
+          description: "All trading halted. Investigate before resetting."
+
+      - alert: OrderLatencyHigh
+        expr: |
+          histogram_quantile(0.95,
+            sum(rate(polymarket_order_latency_seconds_bucket[5m])) by (le)
+          ) > 5
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: P95 order latency > 5s
+          description: "Submission P95 latency is {{ $value }}s."
+
+      - alert: RpcFailoverFired
+        expr: increase(polymarket_rpc_failover_total[5m]) >= 3
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: Polygon RPC failover fired repeatedly
+          description: "{{ $value }} failover events in last 5m on {{ $labels.endpoint }}."
