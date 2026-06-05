@@ -12,6 +12,7 @@ theme:
 nav:
   - Home: index.md
   - Architecture: architecture.md
+  - Diagrams: DIAGRAMS.md
   - Database: DATABASE.md
   - Observability: OBSERVABILITY.md
   - Multi-Wallet: MULTI_WALLET.md
@@ -26,7 +27,11 @@ plugins:
 markdown_extensions:
   - admonition
   - tables
-  - fenced_code
   - codehilite
   - toc:
       permalink: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
