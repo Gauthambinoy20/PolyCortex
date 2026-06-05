@@ -1,0 +1,17 @@
+title = "Pythia gitleaks config"
+
+# Use the full default ruleset; only add narrow allowlists below.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Synthetic, non-secret test fixtures used by the unit tests"
+# The env-validator tests use a publicly-known throwaway private key (the
+# go-ethereum sample key) purely to exercise key-format validation. It controls
+# no funds and is not a real credential.
+paths = [
+  '''tests/test_env_validator_pk.py''',
+]
+regexes = [
+  '''4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318''',
+]
