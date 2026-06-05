@@ -1,0 +1,32 @@
+site_name: PolymarketTrader
+site_description: Neural trading system for Polymarket prediction markets
+site_url: https://example.com/polymarket-trader
+theme:
+  name: material
+  palette:
+    primary: indigo
+    accent: deep-orange
+  features:
+    - navigation.tabs
+    - content.code.copy
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Database: DATABASE.md
+  - Observability: OBSERVABILITY.md
+  - Multi-Wallet: MULTI_WALLET.md
+  - Secrets: SECRETS.md
+  - Runbook: RUNBOOK.md
+  - Testnet: TESTNET.md
+  - Performance: PERFORMANCE.md
+  - Troubleshooting: TROUBLESHOOTING.md
+  - Buyer Quickstart: BUYER_QUICKSTART.md
+plugins:
+  - search
+markdown_extensions:
+  - admonition
+  - tables
+  - fenced_code
+  - codehilite
+  - toc:
+      permalink: true
