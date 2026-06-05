@@ -2,12 +2,14 @@
 
 ---
 
-# PolymarketTrader
+# Pythia
 
-[![CI](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/ci.yml/badge.svg)](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/ci.yml)
-[![Security](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/security.yml/badge.svg)](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/security.yml)
-[![CodeQL](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/codeql.yml/badge.svg)](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/codeql.yml)
-[![Docs](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/docs.yml/badge.svg)](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/docs.yml)
+> *Neural oracle for Polymarket prediction markets.*
+
+[![CI](https://github.com/Gauthambinoy20/Pythia/actions/workflows/ci.yml/badge.svg)](https://github.com/Gauthambinoy20/Pythia/actions/workflows/ci.yml)
+[![Security](https://github.com/Gauthambinoy20/Pythia/actions/workflows/security.yml/badge.svg)](https://github.com/Gauthambinoy20/Pythia/actions/workflows/security.yml)
+[![CodeQL](https://github.com/Gauthambinoy20/Pythia/actions/workflows/codeql.yml/badge.svg)](https://github.com/Gauthambinoy20/Pythia/actions/workflows/codeql.yml)
+[![Docs](https://github.com/Gauthambinoy20/Pythia/actions/workflows/docs.yml/badge.svg)](https://github.com/Gauthambinoy20/Pythia/actions/workflows/docs.yml)
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
