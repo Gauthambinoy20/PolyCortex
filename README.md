@@ -4,7 +4,24 @@
 
 # PolymarketTrader
 
+[![CI](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/ci.yml/badge.svg)](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/ci.yml)
+[![Security](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/security.yml/badge.svg)](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/security.yml)
+[![CodeQL](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/codeql.yml/badge.svg)](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/codeql.yml)
+[![Docs](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/docs.yml/badge.svg)](https://github.com/Gauthambinoy20/PolymarketTrader/actions/workflows/docs.yml)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 Neural trading system for Polymarket prediction markets. Combines Bayesian edge detection, TCN neural net predictions, isotonic probability calibration, HMM regime detection, Claude LLM sentiment, and fractional-Kelly position sizing with defense-in-depth risk controls.
+
+## Screenshots
+
+The Streamlit dashboard running against seeded paper-trading data (`demo-seed`):
+
+| Portfolio overview | P&L curve + live trades |
+|---|---|
+| ![Dashboard overview](docs/screenshots/01-dashboard.png) | ![P&L and trades](docs/screenshots/02-pnl-and-trades.png) |
+| **Trade history** | **Market scanner** |
+| ![Trade history](docs/screenshots/03-trades-detail.png) | ![Market scanner](docs/screenshots/04-markets.png) |
 
 ## Features
 

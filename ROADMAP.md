@@ -1,5 +1,18 @@
 # Roadmap
 
+## Security & dependency notes
+
+- **Dependency CVEs (resolved):** `aiohttp` bumped to 3.14.0 (fixes
+  CVE-2026-34993 and CVE-2026-47265); `gitpython` 3.1.50, `idna` 3.15 and
+  `urllib3` 2.7.0 bumped in the lockfile. A small compatibility shim in
+  `tests/conftest.py` keeps the aioresponses HTTP mocks working on aiohttp 3.14
+  until aioresponses ships native support.
+- **Known advisory (accepted):** `pyarrow` 14.0.2 is flagged by PYSEC-2024-161,
+  but per the advisory text that issue affects the Apache Arrow **R package
+  only**, not PyArrow for Python. It is ignored in the CI dependency audit with
+  this justification rather than forcing a major (14 → 17) bump. Revisit if a
+  Python-affecting advisory appears.
+
 ## v0.2.0 — Production Hardening (shipped)
 
 See `CHANGELOG.md` for the full list.
