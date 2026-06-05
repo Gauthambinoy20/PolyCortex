@@ -1,0 +1,121 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "polymarket-agent"
+version = "1.0.0"
+description = "Neural trading system for Polymarket prediction markets"
+requires-python = ">=3.11"
+dependencies = [
+    "aiohttp>=3.14,<4",  # 3.14.0 fixes CVE-2026-34993 / CVE-2026-47265 (see tests/conftest.py shim)
+    "py-clob-client~=0.0.1",
+    "torch~=2.0",
+    "hmmlearn~=0.3",
+    "anthropic~=0.39",
+    "scikit-learn~=1.3",
+    "pandas~=2.0",
+    "numpy~=1.24",
+    "pyarrow~=14.0",
+    "pyyaml~=6.0",
+    "tavily-python~=0.3",
+    "streamlit~=1.30",
+    "plotly~=5.18",
+    "python-dotenv~=1.0",
+    "prometheus-client>=0.19",
+    "python-json-logger>=2.0",
+    "eth-account>=0.10",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "pytest-asyncio>=0.23.0",
+    "aioresponses>=0.7.0",
+    "ruff>=0.4.0",
+    "mypy>=1.8.0",
+    "types-PyYAML>=6.0",
+    "hypothesis>=6.92",
+    "bandit>=1.7",
+    "pip-audit>=2.7",
+    "detect-secrets>=1.4",
+]
+postgres = [
+    "sqlalchemy>=2.0",
+    "alembic>=1.13",
+    "asyncpg>=0.29",
+    "psycopg2-binary>=2.9",
+]
+observability = [
+    "opentelemetry-api>=1.25",
+    "opentelemetry-sdk>=1.25",
+]
+secrets = [
+    "hvac>=2.0",
+    "boto3>=1.34",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = [
+    "integration: integration tests (mocked E2E)",
+    "slow: tests that take more than a few seconds",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+src = ["src"]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "SIM",    # flake8-simplify
+    "UP",     # pyupgrade
+    "S",      # flake8-bandit (security)
+    "RET",    # flake8-return
+]
+ignore = [
+    "S101",   # assert used (OK in tests)
+    "S603",   # subprocess without shell=True check
+    "S607",   # partial path to executable
+    "E501",   # line too long (formatter handles)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106", "B017", "E402", "F841", "SIM102", "SIM105", "SIM108", "SIM115", "SIM118"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.coverage.run]
+source = ["src/polymarket_agent"]
+omit = [
+    "src/polymarket_agent/main.py",
+    "src/polymarket_agent/__main__.py",
+    "src/polymarket_agent/*/cli.py",
+    "src/polymarket_agent/execution/executor.py",
+    "src/polymarket_agent/execution/batch.py",
+    "src/polymarket_agent/features/sentiment.py",
+    "src/polymarket_agent/models/tcn.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
