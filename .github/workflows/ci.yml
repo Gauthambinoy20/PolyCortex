@@ -70,6 +70,9 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+      # Upgrade pip first: the runner's bundled pip can lag a security patch and
+      # pip-audit audits pip itself (e.g. PYSEC-2026-196, fixed in pip 26.1.2).
+      - run: python -m pip install --upgrade pip
       - run: pip install -e ".[dev,postgres,observability,secrets]" -c "$CONSTRAINTS"
       - name: Bandit SAST
         run: bandit -q -r src/ -ll
