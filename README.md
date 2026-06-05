@@ -25,6 +25,19 @@ The Streamlit dashboard running against seeded paper-trading data (`demo-seed`):
 | **Trade history** | **Market scanner** |
 | ![Trade history](docs/screenshots/03-trades-detail.png) | ![Market scanner](docs/screenshots/04-markets.png) |
 
+## Why I built this
+
+> _✍️ Draft — tweak to your own voice._
+
+Prediction markets are one of the few places where a probabilistic edge can be
+expressed directly as a tradeable price. I built this to find out whether a
+disciplined, fully-automated pipeline — real probability estimation, calibration,
+regime awareness, and strict risk control — could consistently beat the market's
+own implied odds, without ever risking more than a fractional-Kelly stake. Just as
+much, it's an end-to-end systems exercise: data ingestion, ML, execution,
+persistence, observability and operations wired into one production-grade service
+that runs unattended and fails safe.
+
 ## Features
 
 - **Data**: Gamma API market scan, CLOB order book, Tavily news, Claude sentiment (cached)
