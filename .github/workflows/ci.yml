@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Every install path uses the reproducible lockfile.
+  CONSTRAINTS: constraints.txt
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # Pull the lockfile-pinned ruff so CI matches local formatting exactly.
+      - run: pip install ruff -c "$CONSTRAINTS"
+      - run: ruff check src/ tests/
+      - run: ruff format --check src/ tests/
+
+  typecheck:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      # Full extras so optional modules (sqlalchemy, opentelemetry, ...) resolve.
+      - run: pip install -e ".[dev,postgres,observability,secrets]" -c "$CONSTRAINTS"
+      - run: mypy src/polymarket_agent/ --ignore-missing-imports --no-strict-optional
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      # Install ALL extras in CI so optional-dependency tests actually run
+      # (a plain .[dev] install skips them via importorskip — see tests/).
+      - run: pip install -e ".[dev,postgres,observability,secrets]" -c "$CONSTRAINTS"
+      - name: Test with coverage
+        run: >-
+          pytest tests/ -q --tb=short
+          --cov=src/polymarket_agent --cov-report=term-missing
+          --cov-fail-under=80
+
+  security:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[dev,postgres,observability,secrets]" -c "$CONSTRAINTS"
+      - name: Bandit SAST
+        run: bandit -q -r src/ -ll
+      - name: Dependency audit
+        # PYSEC-2024-161 affects the Apache Arrow *R package* only, not PyArrow
+        # for Python (per the advisory text) — ignored with justification.
+        run: pip-audit --strict --desc --ignore-vuln PYSEC-2024-161
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: [lint, test, typecheck]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -t polymarket-trader:test .
+      - name: Smoke test Docker image
+        run: docker run --rm --entrypoint python polymarket-trader:test -c "import polymarket_agent; print('import ok')"
