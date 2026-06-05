@@ -79,7 +79,7 @@ pluggy==1.6.0
 poly_eip712_structs==0.0.1
 propcache==0.4.1
 protobuf==7.34.1
-py-clob-client==0.0.28
+py-clob-client==0.34.6
 py_order_utils==0.3.2
 pyarrow==14.0.2
 pycryptodome==3.23.0
