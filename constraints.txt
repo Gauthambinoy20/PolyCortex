@@ -99,7 +99,7 @@ requests==2.33.1
 rlp==4.1.0
 rpds-py==0.30.0
 ruff==0.15.10
-scikit-learn==1.8.0
+scikit-learn==1.9.0
 scipy==1.17.1
 setuptools==81.0.0
 six==1.17.0
