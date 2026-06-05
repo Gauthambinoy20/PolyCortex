@@ -32,3 +32,6 @@ logs/
 .env.*
 !.env.example
 .coverage
+
+# MkDocs build output
+site/

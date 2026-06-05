@@ -2,8 +2,8 @@
 
 > Neural trading system for Polymarket prediction markets.
 >
-> Full docs in [docs/](../docs).  See [README.md](../README.md) for the
-> TL;DR and [architecture.md](architecture.md) for design.
+> Browse the sections below. See [architecture.md](architecture.md) for the
+> system design, or the project README on GitHub for the TL;DR.
 
 ## Quick links
 
