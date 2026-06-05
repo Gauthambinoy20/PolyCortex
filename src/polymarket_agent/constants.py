@@ -1,0 +1,23 @@
+"""Centralized Polymarket contract addresses, decimals, and signature constants."""
+
+# Polygon USDC.e address (bridged USDC, 6 decimals)
+USDC_ADDRESS = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+USDC_DECIMALS = 6
+
+# Polymarket exchange contracts on Polygon
+POLYMARKET_EXCHANGE = "0x4bFb41d5B3570DeFd03C39a9A4D8dE6Bd8B8982E"
+POLYMARKET_NEG_RISK_EXCHANGE = "0xC5d563A36AE78145C45a50134d48A1215220f80a"
+
+# CTF / Conditional Tokens Framework
+CTF_EXCHANGE = POLYMARKET_EXCHANGE
+CONDITIONAL_TOKENS = "0x4D97DCd97eC945f40cF65F87097ACe5EA0476045"
+
+# Signature types
+SIGNATURE_TYPE_EOA = 0  # Standard EOA (MetaMask etc)
+SIGNATURE_TYPE_MAGIC = 1  # Email/Magic.link
+SIGNATURE_TYPE_GNOSIS = 2  # Gnosis Safe
+
+# Chain IDs
+POLYGON_CHAIN_ID = 137
+MUMBAI_CHAIN_ID = 80001
+AMOY_CHAIN_ID = 80002
