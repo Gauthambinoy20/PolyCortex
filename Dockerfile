@@ -2,7 +2,7 @@
 # Pin Python to specific patch version for reproducibility
 # NOTE: for maximum reproducibility, pin to a SHA digest:
 #   python:3.12.8-slim@sha256:<digest>
-FROM python:3.12.8-slim AS builder
+FROM python:3.14.0-slim AS builder
 
 WORKDIR /build
 
@@ -18,7 +18,7 @@ RUN pip install --no-cache-dir --prefix=/install -c constraints.txt .
 
 # ── Runtime stage ──
 # .dockerignore should exclude: .git, .venv, __pycache__, *.pyc, .env, .pytest_cache, data/
-FROM python:3.12.8-slim
+FROM python:3.14.0-slim
 
 LABEL maintainer="polymarket-trader-team"
 LABEL version="1.0.0"
